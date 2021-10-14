@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>rms</title>
+    <script src="./static/js/jquery.js"></script>
+    <script src="./static/js/gsh-jq-barCodeScaner.js"></script>
+    <script src="./static/plugins/layer/layer.js"></script>
+    <script src="./static/js/app.js"></script>
+    <script src="./static/js/extend.js"></script>
+    <script src="./static/js/qwebchannel-js.js"></script>
+    <script src="./static/js/JSLINQ.js"></script>
+    <!-- <script src="./static/plugins/zui/css/zui.min.css"></script> -->
+    <!-- <link href="./static/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="./static/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" /> -->
+    <!-- <link href="./static/plugins/keyboard/css/keyboard.min.css" rel="stylesheet" />
+    <link href="./static/plugins/pinyin/simple-input-method.css" rel="stylesheet" /> -->
+    <link href="./static/plugins/zui/lib/datetimepicker/datetimepicker.min.css" rel="stylesheet">
+    <!-- <script src="./static/plugins/keyboard/js/jquery.keyboard.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script> -->
+    <link href="./static/plugins/virtualkeyboard/virtualkeyboard.css" rel="stylesheet" />
+    <script>
+      var P_Client,P_User,P_Drug,P_Report,P_Face,P_ClientCom,appx;
+      if("undefined" != typeof qt)
+        {
+          new QWebChannel(qt.webChannelTransport, function (channel) {
+            // P_Client = channel.objects.P_Client;
+            // P_User = channel.objects.P_User;
+            // P_Drug = channel.objects.P_Drug;
+            // P_Report = channel.objects.P_Report;
+            // P_Face = channel.objects.P_Face;
+            // P_ClientCom = channel.objects.P_ClientCom;
+            appx=channel.objects.appx;
+            });
+        }
+      </script>
+      <script src="./static/plugins/virtualkeyboard/virtualkeyboard.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+
+</html>

@@ -1,0 +1,152 @@
+<style scoped>
+    .menuContainer {
+      width: 900px;
+      height: 500px;
+      border: solid 1px #333;
+      overflow: hidden;
+      padding: 0px;
+      padding-right: 20px;
+      margin-right: auto;
+      margin-left: auto;
+      margin: 0px;
+    }
+  
+  </style>
+  <style>
+  .form-box{
+      margin-top:50px;
+  }
+    .form-box .el-form-item__label{
+        font-size: 25px !important;
+        margin:0px !important;
+        padding:0px !important;
+    }
+    .form-box .el-input__inner{
+        height: 62px !important;
+        line-height:62px!important;
+        font-size:20px;
+    }
+      .form-box .el-input-number{
+        height: 60px !important;
+        line-height:60px !important;
+    }
+  </style>
+  
+  <template>
+      <!--页面主体，内容区域-->
+      <div class="content">
+          
+        <div class="body">
+          <div class="frame">
+              <div class="listArea" style="height:690px !important">
+                  <div class="form-box" style="width:90%;margin-left:auto;margin-right:auto">
+  <el-form :label-position="labelPosition"   :model="formLabelAlign">
+    
+   <el-input v-model="userinfo.UserId" type="hidden" disabled='disabled'></el-input>
+    <el-form-item label="用户角色">
+      <el-input v-model="userinfo.RoleName" disabled='disabled' class="numkeyboard"></el-input>
+    </el-form-item>
+    <el-form-item label="用户姓名">
+      <el-input v-model="userinfo.UserRealName" class="numkeyboard"></el-input>
+    </el-form-item>
+    <el-form-item label="性别"  v-if="userinfo.Sex==1">
+        <input type="radio" value="1" v-model="userinfo.Sex" name="Sex" style="margin-left: 20px;width: 18px;line-height: 50px;" checked> <span style="font-size: 25px;">男</span>   
+        <input type="radio" value="0" v-model="userinfo.Sex" name="Sex" style="margin-left: 20px;"> <span style="font-size: 25px;">女</span>
+    </el-form-item>
+   <el-form-item label="性别"  v-else>
+    <input type="radio" value="1" v-model="userinfo.Sex" name="Sex" style="margin-left: 20px;width: 18px;line-height: 50px;"> <span style="font-size: 25px;">男</span>   
+    <input type="radio" value="0" v-model="userinfo.Sex" name="Sex" style="margin-left: 20px;" checked> <span style="font-size: 25px;">女</span>
+  </el-form-item>
+      <el-form-item label="创建时间">
+      <el-input v-model="userinfo.CreateDate" disabled="disabled" class="numkeyboard"></el-input>
+    </el-form-item>
+        <el-form-item label="用户QQ">
+      <el-input v-model="userinfo.QQ" class="numkeyboard"></el-input>
+    </el-form-item>
+        <el-form-item label="用户手机号">
+      <el-input v-model="userinfo.Mobile"  type="text" class="numkeyboard"></el-input>
+    </el-form-item>
+      <el-form-item>
+       <button class="btn btn-primary btn-lg normal-btn" @click="onSubmit" type="button">保存</button>
+    </el-form-item>
+  </el-form>
+            <!--<div v-if="isAdmin()=='ok'">
+                                  <div class="btn-bottom-left" @click="btnUpdateSystemClickEvent">更新系统</div>
+                              </div>-->
+            <!--<div class="btn-bottom2" @click="btnHelperClickEvent">帮助手册</div>-->
+                  </div>
+              </div>
+          </div>
+          <button class="btn btn-danger btn-lg list-btn-bottom-right" @click="btnBackClickEvent" type="button">返回</button>
+        </div>
+      </div>
+  </template>
+  <script>
+    export default {
+      
+      name: "userinfo",
+      extends: extend,
+      data: function () {
+        return {
+          pageTitle: "用户信息",
+          userinfo: this.$parent.currentInfo,
+        };
+      },
+      computed: {
+       
+      },
+      methods: {
+      onSubmit() {
+        if(this.userinfo.UserRealName==""){
+          this.$toast.error('用户姓名不能为空！')
+          return false;
+        }
+          this.$parent.currentInfo.UserRealName = this.userinfo.UserRealName
+          console.log(this.$parent.currentInfo.UserRealName)
+          var Mobile = this.userinfo.Mobile
+          var UserId = this.userinfo.UserId
+          var UserRealName = this.userinfo.UserRealName
+          var Sex = this.userinfo.Sex
+          var QQ = this.userinfo.QQ
+          // if(!Mobile || !UserRealName || !Sex || ！QQ){
+          //     this.$toast.error('请完善表单信息')
+          // }
+          var userData = {
+              UserId: UserId,
+              Mobile: Mobile,
+              UserRealName:UserRealName,
+              Sex:Sex,
+              QQ:QQ,
+          }
+          console.log(userData, 2134)
+  
+          P_User.saveUserinfo(JSON.stringify(userData))
+         
+        },
+        saveUserinfoCallBack: function(obj){
+          
+          if(obj.status==0){
+              this.$toast.info('保存成功！');
+          }else{
+               this.$toast.error('保存失败, 数据异常');
+          }
+  
+        },
+        // 格式化sqlAcheml时间
+        formatSqlTime: function(params){
+          if(params){
+            return params.replace('T', ' ')
+          }
+        },
+      
+      },
+      mounted: function () {
+         window.$('.numkeyboard').keyboard(keyBordSetting);
+         this.userinfo=this.$parent.currentInfo;
+         this.userinfo.CreateDate = this.formatSqlTime(this.userinfo.CreateDate)
+      },
+      
+    };
+  
+  </script>
+  
